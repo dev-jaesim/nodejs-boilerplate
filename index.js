@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 5000;
-
+const { auth } = require("./middleware/auth");
 const { User } = require("./models/User");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -28,7 +28,7 @@ mongoose
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
-app.post("/register", (req, res) => {
+app.post("/api/user/register", (req, res) => {
   // add information from the clien to the DB
   const user = new User(req.body);
   user.save((err, userInfo) => {
@@ -44,7 +44,7 @@ app.post("/register", (req, res) => {
   });
 });
 
-app.post("/login", (req, res) => {
+app.post("/api/user/login", (req, res) => {
   // find the entered email from db
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
@@ -73,6 +73,19 @@ app.post("/login", (req, res) => {
         userId: user._id,
       });
     });
+  });
+});
+
+app.get("/api/user/auth", auth, (req, res) => {
+  res.status(200).json({
+    _id: req.user._id,
+    isAdmin: req.user.role === 0 ? false : true,
+    isAuth: true,
+    email: req.user.email,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    role: req.user.role,
+    img: req.user.image,
   });
 });
 
