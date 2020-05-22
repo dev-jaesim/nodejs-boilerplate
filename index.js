@@ -32,10 +32,12 @@ app.post("/register", (req, res) => {
   const user = new User(req.body);
   user.save((err, userInfo) => {
     if (err) {
+      console.log(err);
       return res.json({ success: false, err });
     } else {
       res.status(200).json({
         success: true,
+        userInfo,
       });
     }
   });
