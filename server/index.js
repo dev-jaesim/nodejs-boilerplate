@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 const { auth } = require("./middleware/auth");
 const { User } = require("./models/User");
 const bodyParser = require("body-parser");
@@ -106,6 +106,4 @@ app.get("/api/users/logout", auth, (req, res) => {
   );
 });
 
-app.listen(port, () =>
-  console.log(`Example app listening at http://localhost:${port}`)
-);
+app.listen(port, () => console.log(`App listening at ${port}`));
