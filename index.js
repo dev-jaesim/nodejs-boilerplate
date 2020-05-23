@@ -28,7 +28,7 @@ mongoose
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
-app.post("/api/user/register", (req, res) => {
+app.post("/api/users/register", (req, res) => {
   // add information from the clien to the DB
   const user = new User(req.body);
   user.save((err, userInfo) => {
@@ -44,7 +44,7 @@ app.post("/api/user/register", (req, res) => {
   });
 });
 
-app.post("/api/user/login", (req, res) => {
+app.post("/api/users/login", (req, res) => {
   // find the entered email from db
   User.findOne({ email: req.body.email }, (err, user) => {
     if (!user) {
@@ -76,7 +76,7 @@ app.post("/api/user/login", (req, res) => {
   });
 });
 
-app.get("/api/user/auth", auth, (req, res) => {
+app.get("/api/users/auth", auth, (req, res) => {
   res.status(200).json({
     _id: req.user._id,
     isAdmin: req.user.role === 0 ? false : true,
@@ -87,6 +87,23 @@ app.get("/api/user/auth", auth, (req, res) => {
     role: req.user.role,
     img: req.user.image,
   });
+});
+
+app.get("/api/users/logout", auth, (req, res) => {
+  User.findOneAndUpdate(
+    {
+      _id: req.user._id,
+    },
+    {
+      token: "",
+    },
+    (err, user) => {
+      if (err) return res.json({ success: false, err });
+      return res.status(200).send({
+        sucess: true,
+      });
+    }
+  );
 });
 
 app.listen(port, () =>
