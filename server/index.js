@@ -1,5 +1,11 @@
 const express = require("express");
+
+var cors = require("cors");
+
 const app = express();
+
+app.use(cors());
+
 const port = process.env.PORT || 5000;
 const { auth } = require("./middleware/auth");
 const { User } = require("./models/User");
