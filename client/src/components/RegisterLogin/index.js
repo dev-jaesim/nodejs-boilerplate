@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/user_actions";
+import { Link } from "react-router-dom";
 
 class RegisterLogin extends Component {
   state = {
@@ -55,6 +56,7 @@ class RegisterLogin extends Component {
           <form className="col s12">
             <div className="row">
               <div className="input-field col s12">
+                {/* <label htmlFor="email">Email</label> */}
                 <input
                   name="email"
                   value={this.state.email}
@@ -62,8 +64,8 @@ class RegisterLogin extends Component {
                   id="email"
                   type="email"
                   className="validate"
+                  placeholder="Email"
                 />
-                <label htmlFor="email">Email</label>
                 <span
                   className="helper-text"
                   data-error="type a right type email"
@@ -74,6 +76,9 @@ class RegisterLogin extends Component {
 
             <div className="row">
               <div className="input-field col s12">
+                {/* <label className="block" htmlFor="password">
+                  Password
+                </label> */}
                 <input
                   name="password"
                   value={this.state.password}
@@ -81,8 +86,8 @@ class RegisterLogin extends Component {
                   id="password"
                   type="password"
                   className="validate"
+                  placeholder="Password"
                 />
-                <label htmlFor="email">Password</label>
                 <span
                   className="helper-text"
                   data-error="wrong"
@@ -98,7 +103,7 @@ class RegisterLogin extends Component {
             )}
 
             <div className="row">
-              <div className="col 12">
+              <div className="col s12">
                 <button
                   className="btn waves-effect red lighten-2"
                   type="submit"
@@ -107,6 +112,16 @@ class RegisterLogin extends Component {
                 >
                   Login
                 </button>
+                &nbsp;&nbsp;
+                <Link to="/register">
+                  <button
+                    className="btn waves-effect red lighten-2"
+                    type="submit"
+                    name="action"
+                  >
+                    Register
+                  </button>
+                </Link>
               </div>
             </div>
           </form>
